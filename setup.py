@@ -1,10 +1,17 @@
+"""
+A setuptools based setup module for squad-ai package.
+"""
+
 from setuptools import setup, find_packages
+
+with open("README.md", encoding='utf-8') as readme:
+    long_description = readme.read()
 
 setup(
     name="squad-ai",
     version="0.1.0",
     description="A modular AI agentic framework.",
-    long_description=open("README.md").read(),
+    long_description=long_description,
     long_description_content_type="text/markdown",
     author="Deepak Bhardwaj",
     author_email="your.email@example.com",

@@ -1,16 +1,31 @@
-import inspect
+"""
+This module defines a DynamicTool class that wraps a callable function and 
+dynamically generates a schema based on the function's signature and docstring.
+
+Classes:
+    MissingParameterDescriptionError(Exception):
+
+    DynamicTool(Tool):
+        A class that wraps a callable function and dynamically generates a schema 
+        based on the function's signature and docstring.
+"""
+
 import re
-from typing import Callable, Dict, Any, Tuple, get_type_hints
+import inspect
+from typing import Callable, Dict, Any
 from .base_tool import Tool
 
 
 class MissingParameterDescriptionError(Exception):
-    pass
+    """
+    Custom exception raised when there is a missing parameter description.
+    """
 
 
 class DynamicTool(Tool):
     """
-    DynamicTool is a class that wraps a callable function and dynamically generates a schema based on the function's signature and docstring.
+    DynamicTool is a class that wraps a callable function and dynamically
+    generates a schema based on the function's signature and docstring.
     Attributes:
         name (str): Name of the tool.
         description (str): Description of the tool.
@@ -20,7 +35,8 @@ class DynamicTool(Tool):
         _parse_docstring() -> Dict[str, str]:
             Parse the docstring of the function to extract parameter descriptions.
         _get_parameter_type(param: inspect.Parameter) -> str:
-            Extract the type of a parameter from its annotation. Defaults to 'string' if no type is specified.
+            Extract the type of a parameter from its annotation.
+            Defaults to 'string' if no type is specified.
         _generate_schema() -> Dict[str, Any]:
         execute(*args, **kwargs) -> str:
         get_schema() -> Dict[str, Any]:
@@ -33,7 +49,7 @@ class DynamicTool(Tool):
         Args:
             func (Callable): The callable function to wrap.
             name (str, optional): Name of the tool. Defaults to the function's name.
-            description (str, optional): Description of the tool. Defaults to the function's docstring.
+            description (str, optional): Description of the tool.
         """
         self.func = func
         self.name = name or func.__name__

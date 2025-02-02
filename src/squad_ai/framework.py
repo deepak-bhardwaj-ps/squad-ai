@@ -1,9 +1,25 @@
+"""
+This module provides a framework for creating and managing agents. 
+Each agent can have its own persona, interpreter, tools, and optional prompt engine.
+
+Classes:
+    - Framework: Manages and creates agents.
+    - Agent: Represents an individual agent in the system.
+
+Methods:
+    - `create_agent`: Creates and registers a new agent with specified details.
+    - `list_agents`: Lists all registered agents.
+"""
+
 from typing import List
 
 from . import PromptEngine, Persona, Interpreter, Tool, Agent
 
 
 class Framework:
+    """
+    A class for managing and creating agents.
+    """
     def __init__(self):
         self.agents = {}
 
@@ -22,7 +38,7 @@ class Framework:
             persona (Persona): The persona of the agent.
             interpreter (Interpreter): The interpreter used by the agent.
             tools (List[Tool]): A list of tools available to the agent.
-            prompt_engine (PromptEngine, optional): The prompt engine for the agent. Defaults to None.
+            prompt_engine (PromptEngine, optional): The prompt engine for the agent.
         Returns:
             Agent: The created agent instance.
         Raises:

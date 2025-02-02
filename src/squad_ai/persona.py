@@ -1,3 +1,11 @@
+"""
+This module defines the Persona class, which represents a persona with a name and description.
+
+Classes:
+---------
+- Persona: A class to represent a persona with a name and description.
+"""
+
 class Persona:
     """
     A class to represent a persona with a name and description.

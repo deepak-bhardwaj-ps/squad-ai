@@ -1,19 +1,41 @@
+"""
+The prompt_engine module contains classes and methods designed to facilitate 
+the generation of custom prompts based on a given persona and task.
+
+Classes:
+    PromptEngine: Generates custom prompts based on a given persona and task.
+        - Attributes:
+            DEFAULT_TEMPLATE (str): The default template string used for generating prompts.
+        
+        - Methods:
+            __init__(self, prompt_template=None):
+                Initializes the PromptEngine with a specified template.
+            
+            generate_prompt(self, persona: Persona, task: str) -> str:
+                Generates a custom prompt based on the agent's persona using the specified template.
+
+    Persona: A class representing an agent with a name and description.
+"""
+
 from squad_ai.persona import Persona
 
 
 class PromptEngine:
     """
-    PromptEngine is a class responsible for generating custom prompts based on a given persona and task.
+    PromptEngine is a class responsible for generating custom prompts 
+    based on a given persona and task.
 
     Attributes:
         DEFAULT_TEMPLATE (str): The default template string used for generating prompts.
 
     Methods:
         __init__(self, prompt_template=None):
-            Initializes the PromptEngine with a specified template or the default template if none is provided.
+            Initializes the PromptEngine with a specified template 
+            or the default template if none is provided.
 
         generate_prompt(self, persona: Persona, task: str) -> str:
-            Generates a custom prompt based on the agent's persona using the specified template.
+            Generates a custom prompt based on the agent's persona 
+            using the specified template.
 
             Parameters:
                 persona (Persona): The persona of the agent.

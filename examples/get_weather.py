@@ -1,3 +1,7 @@
+"""
+This module contains an example of using the Squad AI framework to get current weather conditions.
+"""
+
 import json
 
 from squad_ai import Framework
@@ -19,14 +23,13 @@ def get_current_weather(location: str, unit: str = "fahrenheit") -> str:
 
     if "tokyo" in location.lower():
         return json.dumps({"location": "Tokyo", "temperature": "10", "unit": unit})
-    elif "san francisco" in location.lower():
+    if "san francisco" in location.lower():
         return json.dumps(
             {"location": "San Francisco", "temperature": "72", "unit": unit}
         )
-    elif "paris" in location.lower():
+    if "paris" in location.lower():
         return json.dumps({"location": "Paris", "temperature": "22", "unit": unit})
-    else:
-        return json.dumps({"location": location, "temperature": "unknown"})
+    return json.dumps({"location": location, "temperature": "unknown"})
 
 
 if __name__ == "__main__":

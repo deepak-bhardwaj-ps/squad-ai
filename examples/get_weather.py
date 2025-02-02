@@ -5,8 +5,10 @@ This module contains an example of using the Squad AI framework to get current w
 import json
 
 from squad_ai import Framework
+from squad_ai.agent import AgentConfig
 from squad_ai.interpreter import Interpreter
 from squad_ai.persona import Persona
+from squad_ai.prompt_engine import PromptEngine
 from squad_ai.tools.dynamic_tool import DynamicTool
 
 
@@ -47,13 +49,19 @@ if __name__ == "__main__":
     framework = Framework()
 
     # Create agents
+    weather_agent_persona = Persona(
+        name="Weather Reporter",
+        description="You must reply only with current weather condition.",
+    )
+
     weather_agent = framework.create_agent(
         "Bob",
-        Persona(
-            "Weather Reporter", "You must reply only with current weather condition."
+        AgentConfig(
+            persona=weather_agent_persona,
+            llm_wrapper=openai_interpreter,
+            tools=[dynamic_weather],
+            prompt_engine=PromptEngine(),
         ),
-        Interpreter(api_key="ollama", base_url="http://localhost:11434/v1"),
-        [dynamic_weather],
     )
 
     weather_agent.perform_task("What is the current temprature in Paris.")

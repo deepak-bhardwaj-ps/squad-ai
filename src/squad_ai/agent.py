@@ -8,11 +8,33 @@ to interact with the environment based on its defined role and behavior.
 
 from typing import List, Optional
 import json
+from pydantic import BaseModel
 
 from squad_ai.prompt_engine import PromptEngine
 from squad_ai.persona import Persona
 from squad_ai.interpreter import Interpreter
 from squad_ai.tools.base_tool import Tool
+
+
+class AgentConfig(BaseModel):
+    """
+    Agent configuration.
+
+    Attributes:
+        persona (Persona): The persona that represents the agent's role and behavior.
+        llm_wrapper (Interpreter): An interpreter wrapper around an LLM model.
+        tools (dict): A dictionary mapping tool names to their instances.
+        prompt_engine (PromptEngine): Optional prompt engine for generating prompts.
+    """
+
+    persona: Persona
+    llm_wrapper: Optional[Interpreter] = None
+    tools: Optional[List[Tool]] = None
+    prompt_engine: Optional[PromptEngine] = None
+
+    class Config:
+        """Pydantic model configuration."""
+        arbitrary_types_allowed = True
 
 
 class Agent:
@@ -30,10 +52,7 @@ class Agent:
     def __init__(
         self,
         name: str,
-        persona: Persona,
-        llm_wrapper: Optional[Interpreter] = None,
-        tools: Optional[List[Tool]] = None,
-        prompt_engine: Optional[PromptEngine] = None,
+        config: AgentConfig,
     ):
         """Initialize the agent with its components.
 
@@ -45,14 +64,12 @@ class Agent:
             prompt_engine: Optional prompt engine for generating prompts. Defaults to None.
         """
         self.name = name
-        self.persona = persona
-        self.llm_wrapper = llm_wrapper or Interpreter(
-                api_key="ollama", base_url="http://localhost:11434/v1"
-            )
+        self.persona = config.persona
+        self.llm_wrapper = config.llm_wrapper
         self.tools = {
-            tool.get_schema().get("function")["name"]: tool for tool in tools
+            tool.get_schema().get("function")["name"]: tool for tool in config.tools or []
         }  # Map tool names to instances
-        self.prompt_engine = prompt_engine or PromptEngine()
+        self.prompt_engine = config.prompt_engine
 
     def perform_task(self, task: str) -> str:
         """Perform a task using the agent's capabilities.

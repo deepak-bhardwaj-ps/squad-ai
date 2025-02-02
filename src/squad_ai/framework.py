@@ -11,25 +11,23 @@ Methods:
     - `list_agents`: Lists all registered agents.
 """
 
-from typing import List
+from squad_ai.agent import AgentConfig
 
-from . import PromptEngine, Persona, Interpreter, Tool, Agent
+from . import Agent
 
 
 class Framework:
     """
     A class for managing and creating agents.
     """
+
     def __init__(self):
         self.agents = {}
 
     def create_agent(
         self,
         name: str,
-        persona: Persona,
-        interpreter: Interpreter,
-        tools: List[Tool],
-        prompt_engine: PromptEngine = None,
+        config: AgentConfig,
     ) -> Agent:
         """
         Creates and registers a new agent.
@@ -49,7 +47,7 @@ class Framework:
         if name in self.agents:
             raise ValueError(f"An agent with the name {name} already exists.")
 
-        agent = Agent(name, persona, interpreter, tools, prompt_engine)
+        agent = Agent(name, config)
         self.agents[name] = agent
 
         return agent

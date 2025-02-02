@@ -5,7 +5,7 @@ from . import PromptEngine, Persona, Interpreter, Tool, Agent
 
 class Framework:
     def __init__(self):
-        self.agents = []
+        self.agents = {}
 
     def create_agent(
         self,
@@ -25,12 +25,20 @@ class Framework:
             prompt_engine (PromptEngine, optional): The prompt engine for the agent. Defaults to None.
         Returns:
             Agent: The created agent instance.
+        Raises:
+            ValueError: If an agent with the same name already exists.
         """
+
+        # Check if an agent with the same name already exists
+        if name in self.agents:
+            raise ValueError(f"An agent with the name {name} already exists.")
+
         agent = Agent(name, persona, interpreter, tools, prompt_engine)
-        self.agents.append(agent)
+        self.agents[name] = agent
+
         return agent
 
     def list_agents(self):
         """List all registered agents."""
-        for agent in self.agents:
+        for _, agent in self.agents.items():
             print(agent)
